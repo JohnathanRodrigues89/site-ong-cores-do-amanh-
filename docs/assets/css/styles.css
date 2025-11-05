@@ -1,0 +1,502 @@
+/* =======================
+   DESIGN SYSTEM - VARIÁVEIS
+   ======================= */
+:root {
+    /* Paleta de cores */
+    --clr-primary: #FF6B6B;      /* Vermelho vibrante */
+    --clr-secondary: #4ECDC4;    /* Verde água */
+    --clr-tertiary: #556270;     /* Cinza escuro */
+    --clr-accent: #FFD93D;       /* Amarelo */
+    --clr-neutral-100: #F7FFF7;  /* Branco suave */
+    --clr-neutral-200: #E0E0E0;  /* Cinza claro */
+    --clr-neutral-300: #C4C4C4;  /* Cinza médio */
+    --clr-neutral-400: #333333;  /* Preto suave */
+    --clr-error: #FF4C4C;        /* Vermelho de erro */
+
+    /* Tipografia */
+    --font-primary: 'Poppins', sans-serif;
+    --fs-h1: 3rem;
+    --fs-h2: 2.5rem;
+    --fs-h3: 2rem;
+    --fs-h4: 1.5rem;
+    --fs-h5: 1.2rem;
+    --fs-body: 1rem;
+    --fs-xs: 0.85rem;
+
+    /* Espaçamentos (modulares) */
+    --space-8: 8px;
+    --space-16: 16px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-48: 48px;
+    --space-64: 64px;
+
+    /* Shadows */
+    --shadow-light: rgba(0,0,0,0.1) 0 2px 8px;
+    --shadow-medium: rgba(0,0,0,0.15) 0 5px 15px;
+    --shadow-deep: rgba(0,0,0,0.25) 0 10px 30px;
+
+    /* Header */
+    --header-height: 70px;
+
+    /* Grid */
+    --grid-columns: 12;
+}
+
+/* =======================
+   RESET CSS
+   ======================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--fs-body);
+    color: var(--clr-neutral-400);
+    background-color: var(--clr-neutral-100);
+    line-height: 1.6;
+}
+
+/* =======================
+   TYPOGRAFIA
+   ======================= */
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+h5 { font-size: var(--fs-h5); }
+
+/* =======================
+   LAYOUT PRINCIPAL - GRID
+   ======================= */
+.container {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    gap: var(--space-24);
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 var(--space-16);
+}
+
+/* =======================
+   HEADER / NAVBAR
+   ======================= */
+.page-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--clr-neutral-100);
+    box-shadow: var(--shadow-light);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-16) var(--space-24);
+}
+
+.navbar__brand {
+    font-weight: 700;
+    font-size: var(--fs-h3);
+    color: var(--clr-primary);
+}
+
+.navbar__link-list {
+    list-style: none;
+    display: flex;
+    gap: var(--space-24);
+}
+
+.navlink a {
+    font-weight: 600;
+    padding: var(--space-8) var(--space-16);
+    transition: 0.3s;
+}
+
+.navlink a:hover,
+.navlink a:focus {
+    background: var(--clr-secondary);
+    color: #fff;
+    border-radius: 8px;
+}
+
+/* =======================
+   MENU HAMBURGER MOBILE
+   ======================= */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 35px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger .bar {
+    height: 3px;
+    width: 100%;
+    background: var(--clr-tertiary);
+    border-radius: 2px;
+}
+
+/* Mobile nav */
+@media (max-width: 767px) {
+  .hamburger {
+    display: flex;
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    z-index: 200;
+    background: transparent;
+  }
+
+  .navbar__link-list {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start; /* alinha texto à esquerda dentro do menu */
+    position: absolute;
+    top: calc(var(--header-height) - 10px); /* logo abaixo do header */
+    right: 16px; /* alinhado ao botão hambúrguer */
+    width: 220px; /* largura ajustada */
+    background: var(--clr-neutral-100);
+    padding: var(--space-16);
+    gap: var(--space-16);
+    border-radius: 8px;
+    box-shadow: var(--shadow-medium);
+    z-index: 150;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  /* Quando ativo */
+  .navbar__link-list.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Links dentro do menu */
+  .navlink a {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--clr-tertiary);
+    text-decoration: none;
+    width: 100%;
+    padding: var(--space-8) var(--space-16);
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .navlink a:hover,
+  .navlink a:focus {
+    background: var(--clr-secondary);
+    color: #fff;
+  }
+}
+
+
+/* =======================
+   HERO
+   ======================= */
+.hero {
+    display: grid;
+    place-items: center;
+    min-height: 400px;
+    position: relative;
+    text-align: center;
+}
+
+.hero__picture__background-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.mask {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+
+.hero__text {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    max-width: 800px;
+    padding: var(--space-16);
+}
+
+/* =======================
+   SECTIONS
+   ======================= */
+.section {
+    margin: var(--space-48) 0;
+    padding: 0 var(--space-16);
+}
+
+.section h2 {
+    margin-bottom: var(--space-16);
+    text-align: center;
+}
+
+/* =======================
+   CARDS DE PROJETOS
+   ======================= */
+.projetos-grid {
+    display: grid;
+    gap: var(--space-24);
+    grid-template-columns: 1fr;
+}
+
+.card {
+    background: var(--clr-card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card__img-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card__title {
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    padding: var(--space-16);
+}
+
+.card p {
+    padding: 0 var(--space-16) var(--space-16);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-deep);
+}
+
+/* === FORMULÁRIO DE CADASTRO === */
+.cadastro-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #444;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.form-group.error input {
+  border-color: #e74c3c;
+  background-color: #ffe6e6;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 3px;
+  min-height: 16px;
+  display: block;
+}
+
+/* Botão */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #009688;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn:hover {
+  background: #00796b;
+}
+
+/* TOASTS */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+.toast {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  animation: fadeInOut 5s ease forwards;
+  font-weight: bold;
+}
+.toast--error {
+  background-color: #e74c3c;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+
+/* =======================
+   BOTÕES
+   ======================= */
+.btn {
+    padding: var(--space-16) var(--space-32);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn--primary {
+    background: var(--clr-primary);
+    color: #fff;
+}
+
+.btn--primary:hover {
+    background: var(--clr-secondary);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* =======================
+   BOTÃO DE ALTO CONTRASTE
+   ======================= */
+.btn-contraste {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.btn-contraste:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Modo de alto contraste (ativado pelo JS) */
+body.alto-contraste {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.alto-contraste a {
+  color: #ff0 !important;
+}
+
+body.alto-contraste header,
+body.alto-contraste footer,
+body.alto-contraste section {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+body.alto-contraste img {
+  filter: brightness(0.8) contrast(1.2);
+}
+
+/* =======================
+   FOOTER
+   ======================= */
+.page-footer {
+    background: var(--clr-tertiary);
+    color: #fff;
+    padding: var(--space-32) var(--space-16);
+    text-align: center;
+}
+
+.page-footer a {
+    color: #fff;
+    font-weight: 500;
+}
+
+.page-footer-social-media {
+  display: flex;
+  justify-content: center;     /* centraliza horizontalmente */
+  align-items: center;
+  gap: 12px;                   /* espaçamento entre ícones */
+  margin-top: 10px;
+}
+
+.page-footer-social-media a img {
+  width: 24px;                 /* tamanho do ícone */
+  height: 24px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.page-footer-social-media a img:hover {
+  transform: scale(1.1);       /* leve aumento ao passar o mouse */
+  opacity: 0.8;                /* efeito de suavidade */
+}
+
+.page-footer-social-media a {
+  display: inline-block;
+}
+
+
+/* =======================
+   RESPONSIVIDADE
+   ======================= */
+@media (min-width: 768px) {
+    .projetos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .projetos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
