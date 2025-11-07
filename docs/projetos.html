@@ -9,48 +9,49 @@
 <body>
 
 <header class="page-header">
-    <nav class="navbar">
-        <div class="navbar__brand">Cores do Amanhã</div>
-        <button class="hamburger">
+    <nav class="navbar" aria-label="Menu principal">
+        <a href="index.html" class="navbar__brand">Cores do Amanhã</a>
+        <button class="hamburger" aria-label="Abrir menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
         <ul class="navbar__link-list">
             <li class="navlink"><a href="index.html">Início</a></li>
-            <li class="navlink"><a href="projetos.html">Projetos</a></li>
+            <li class="navlink"><a href="projetos.html" aria-current="page">Projetos</a></li>
             <li class="navlink"><a href="cadastro.html">Cadastro</a></li>
         </ul>
     </nav>
 </header>
 
-<main>
+<main id="conteudo-principal">
     <section class="section section--projects">
-        <h2>Nossos Projetos</h2>
+        <h1>Nossos Projetos</h1>
+
         <div class="projetos-grid">
-            <div class="card">
-                <div class="card__img-container">
-                    <img src="img/img01.jpg" alt="Projeto Arte">
-                </div>
-                <div class="card__title">Oficinas de Arte</div>
+            <article class="card">
+                <figure class="card__img-container">
+                    <img src="assets/img/img03.jpg" alt="Crianças participando de oficinas de arte">
+                </figure>
+                <h2 class="card__title">Oficinas de Arte</h2>
                 <p>Oferecemos atividades artísticas para crianças e jovens, estimulando criatividade e expressão pessoal.</p>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card__img-container">
-                    <img src="img/img03.jpg" alt="Projeto Educação">
-                </div>
-                <div class="card__title">Educação e Inclusão</div>
+            <article class="card">
+                <figure class="card__img-container">
+                    <img src="assets/img/img04.jpg" alt="Alunos em aula de educação e inclusão social">
+                </figure>
+                <h2 class="card__title">Educação e Inclusão</h2>
                 <p>Projetos educativos para inclusão social e alfabetização de crianças e adultos em situação de vulnerabilidade.</p>
-            </div>
+            </article>
 
-            <div class="card">
-                <div class="card__img-container">
-                    <img src="img/img04.jpg" alt="Projeto Voluntariado">
-                </div>
-                <div class="card__title">Voluntariado</div>
+            <article class="card">
+                <figure class="card__img-container">
+                    <img src="assets/img/img05.jpg" alt="Voluntários em ação comunitária">
+                </figure>
+                <h2 class="card__title">Voluntariado</h2>
                 <p>Incentivamos voluntários a participarem de ações comunitárias e eventos culturais, transformando vidas juntas.</p>
-            </div>
+            </article>
         </div>
 
         <div style="margin-top:32px;text-align:center;">
@@ -61,13 +62,20 @@
 
 <footer class="page-footer">
     <p>&copy; 2025 Cores do Amanhã</p>
-    <div class="page-footer-social-media">
-        <a href="#"><img src="assets/icons/fb.svg" alt="Facebook"></a>
-        <a href="#"><img src="assets/icons/int.svg" alt="Instagram"></a>
-        <a href="#"><img src="assets/icons/tw.svg" alt="Twitter"></a>
+    <div class="page-footer-social-media" aria-label="Redes sociais">
+        <a href="#" aria-label="Facebook da Cores do Amanhã">
+            <img src="assets/icons/fb.svg" alt="Ícone do Facebook">
+        </a>
+        <a href="#" aria-label="Instagram da Cores do Amanhã">
+            <img src="assets/icons/int.svg" alt="Ícone do Instagram">
+        </a>
+        <a href="#" aria-label="Twitter da Cores do Amanhã">
+            <img src="assets/icons/tw.svg" alt="Ícone do Twitter">
+        </a>
     </div>
 </footer>
 
+<button class="btn-contraste" aria-pressed="false">Alto Contraste</button>
 <script src="js/script.js"></script>
 </body>
 </html>

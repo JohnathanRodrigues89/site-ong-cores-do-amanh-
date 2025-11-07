@@ -1,65 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cores do Amanhã - Página Inicial</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cores do Amanhã - Página Inicial</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-<header class="page-header">
-    <nav class="navbar">
-        <div class="navbar__brand">Cores do Amanhã</div>
-        <button class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-        <ul class="navbar__link-list">
-            <li class="navlink"><a href="index.html">Início</a></li>
-            <li class="navlink"><a href="projetos.html">Projetos</a></li>
-            <li class="navlink"><a href="cadastro.html">Cadastro</a></li>
-        </ul>
+  <header class="page-header">
+    <nav class="navbar" aria-label="Menu principal">
+      <a href="index.html" class="navbar__brand">Cores do Amanhã</a>
+      <button class="hamburger" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="navbar__link-list">
+        <li class="navlink"><a href="index.html">Início</a></li>
+        <li class="navlink"><a href="projetos.html">Projetos</a></li>
+        <li class="navlink"><a href="cadastro.html">Cadastro</a></li>
+      </ul>
     </nav>
-</header>
+  </header>
 
-<main>
-    <section class="hero">
-        <img src="img/img00.jpg" alt="Imagem ONG" class="hero__picture__background-img">
-        <div class="mask"></div>
-        <div class="hero__text">
-            <h1>Bem-vindo à Cores do Amanhã</h1>
-            <p>Promovendo inclusão, diversidade e cultura através de projetos sociais e educativos. Junte-se a nós e transforme vidas.</p>
-        </div>
+  <main id="conteudo-principal">
+    <!-- HERO -->
+    <section class="hero" aria-label="Introdução e mensagem principal da ONG">
+      <img src="assets/img/img01.jpg" alt="Crianças participando de atividades artísticas" class="hero__picture__background-img">
+      <div class="mask"></div>
+      <div class="hero__text">
+        <h1>Bem-vindo à Cores do Amanhã</h1>
+        <p>Promovendo inclusão, diversidade e cultura através de projetos sociais e educativos. Junte-se a nós e transforme vidas.</p>
+      </div>
     </section>
 
-    <section class="section section--about">
-        <h2>Sobre a ONG</h2>
-        <p>A Cores do Amanhã é uma organização sem fins lucrativos dedicada a apoiar crianças, jovens e adultos em situação de vulnerabilidade, oferecendo oficinas de arte, cultura, educação e inclusão social.</p>
-        <p>Nosso objetivo é promover oportunidades, incentivar talentos e criar um futuro mais colorido e justo para todos.</p>
-        <img src="img/img02.jpg" alt="Atividades ONG" style="width:100%;margin-top:16px;border-radius:12px;">
-    </section>
+    <!-- SOBRE -->
+<section class="section section--about" aria-labelledby="titulo-sobre">
+  <h2 id="titulo-sobre">Sobre a ONG</h2>
+  <article>
+    <p>
+      A <strong>Cores do Amanhã</strong> é uma organização sem fins lucrativos que acredita no poder transformador da arte, da cultura e da educação como instrumentos de inclusão social.
+    </p>
+    <p>
+      Desde 2010, atuamos em comunidades em situação de vulnerabilidade, oferecendo oficinas artísticas, ações culturais e projetos educativos que despertam talentos, fortalecem vínculos e promovem oportunidades reais de desenvolvimento humano.
+    </p>
+    <p>
+      Nosso objetivo é inspirar mudanças, colorir trajetórias e construir um futuro mais criativo, solidário e justo para todos.
+    </p>
+    <figure style="margin-top:16px;">
+      <img src="assets/img/img02.jpg" alt="Crianças e jovens participando de oficinas artísticas da ONG Cores do Amanhã" style="width:100%;border-radius:12px;">
+      <figcaption style="text-align:center;margin-top:8px;font-size:0.9rem;color:#666;">
+        Oficinas culturais promovendo arte e inclusão social.
+      </figcaption>
+    </figure>
+  </article>
+</section>
 
-    <section class="section section--contact">
-        <h2>Contato</h2>
-        <p>Email: contato@coresdoamanha.org</p>
-        <p>Telefone: (11) 98765-4321</p>
+    <!-- CONTATO -->
+    <section class="section section--contact" aria-labelledby="titulo-contato">
+      <h2 id="titulo-contato">Contato</h2>
+      <address>
+        <p>Email: <a href="mailto:contato@coresdoamanha.org">contato@coresdoamanha.org</a></p>
+        <p>Telefone: <a href="tel:+5511987654321">(11) 98765-4321</a></p>
         <p>Endereço: Rua das Cores, 123 - São Paulo/SP</p>
-        <img src="img/logo.png" alt="Contato ONG" style="width:100%;margin-top:16px;border-radius:12px;">
+      </address>
+      <img src="assets/img/logo.png" alt="Logotipo da ONG Cores do Amanhã" style="width:100%;margin-top:16px;border-radius:12px;">
     </section>
-</main>
+  </main>
 
-<footer class="page-footer">
+  <!-- RODAPÉ -->
+  <footer class="page-footer" aria-label="Rodapé do site">
     <p>&copy; 2025 Cores do Amanhã</p>
     <div class="page-footer-social-media">
-        <a href="#"><img src="assets/icons/fb.svg" alt="Facebook"></a>
-        <a href="#"><img src="assets/icons/int.svg" alt="Instagram"></a>
-        <a href="#"><img src="assets/icons/tw.svg" alt="Twitter"></a>
+      <a href="#" aria-label="Facebook da ONG Cores do Amanhã">
+        <img src="assets/icons/fb.svg" alt="Facebook">
+      </a>
+      <a href="#" aria-label="Instagram da ONG Cores do Amanhã">
+        <img src="assets/icons/int.svg" alt="Instagram">
+      </a>
+      <a href="#" aria-label="Twitter da ONG Cores do Amanhã">
+        <img src="assets/icons/tw.svg" alt="Twitter">
+      </a>
     </div>
-</footer>
+  </footer>
 
-<button class="btn-contraste">Alto Contraste</button>
-<script src="js/script.js"></script>
+  <!-- BOTÃO DE ACESSIBILIDADE -->
+  <button class="btn-contraste" aria-pressed="false" aria-label="Ativar modo de alto contraste">Alto Contraste</button>
+
+  <script src="js/script.js"></script>
 </body>
 </html>

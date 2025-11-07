@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.setAttribute('aria-controls', 'main-navigation');
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', 'Abrir menu de navegação');
+        hamburger.setAttribute('role', 'button'); // acessibilidade extra
         navMenu.setAttribute('role', 'menu');
 
         const toggleMenu = () => {
@@ -44,9 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
     contrastButton.setAttribute('aria-label', 'Ativar ou desativar modo de alto contraste');
     document.body.appendChild(contrastButton);
 
-    contrastButton.addEventListener('click', () => {
+    const toggleContrast = () => {
         const isActive = document.body.classList.toggle('alto-contraste');
         contrastButton.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    };
+
+    contrastButton.addEventListener('click', toggleContrast);
+    contrastButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleContrast();
+        }
     });
 
     // -------------------------------
@@ -55,24 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const projetosContainer = document.querySelector('.projetos-grid');
     if (projetosContainer) {
         const projetos = [
-            { title: "Oficinas de Arte", description: "Atividades artísticas para crianças e jovens.", img: "project1.jpg" },
-            { title: "Educação e Inclusão", description: "Projetos educativos e sociais.", img: "project2.jpg" },
-            { title: "Voluntariado", description: "Participação em ações comunitárias.", img: "project3.jpg" }
+            { title: "Oficinas de Arte", description: "Atividades artísticas para crianças e jovens.", img: "../assets/img/img03.jpg" },
+            { title: "Educação e Inclusão", description: "Projetos educativos e sociais.", img: "../assets/img/img04.jpg" },
+            { title: "Voluntariado", description: "Participação em ações comunitárias.", img: "../assets/img/img05.png" }
         ];
 
-        projetosContainer.innerHTML = '';
-        projetos.forEach(p => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `
-                <div class="card__img-container">
-                    <img src="${p.img}" alt="${p.title}" class="card__img">
-                </div>
-                <div class="card__title">${p.title}</div>
-                <p>${p.description}</p>
-            `;
-            projetosContainer.appendChild(card);
-        });
+        if (!projetosContainer.querySelector('.card')) {
+            projetos.forEach(p => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="card__img-container">
+                        <img src="${p.img}" alt="${p.title}" class="card__img">
+                    </div>
+                    <div class="card__title">${p.title}</div>
+                    <p>${p.description}</p>
+                `;
+                projetosContainer.appendChild(card);
+            });
+        }
     }
 
     // -------------------------------
@@ -91,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!toastContainer) return;
         const toast = document.createElement('div');
         toast.className = `toast toast--${type}`;
+        toast.setAttribute('role', 'status'); // acessibilidade
+        toast.setAttribute('aria-live', 'polite');
         toast.textContent = message;
         toastContainer.appendChild(toast);
         setTimeout(() => toast.remove(), 5000);
@@ -219,8 +231,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Envio do formulário
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
+
+            // limpar erros antigos
+            form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            form.querySelectorAll('.error-message').forEach(msg => msg.innerText = '');
+
             formErrors.length = 0;
             for (const v of validations) await v.callback();
+
             if (formErrors.length > 0) {
                 displayToast("Corrija os erros antes de enviar", "error");
             } else {
@@ -237,7 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     estado: estado.value,
                 };
                 localStorage.setItem("cadastro", JSON.stringify(formData));
+                console.log("Dados salvos:", formData); // debug
                 form.reset();
+                nome.focus(); // acessibilidade
             }
         });
     }
