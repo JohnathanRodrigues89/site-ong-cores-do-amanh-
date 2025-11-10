@@ -30,14 +30,21 @@ Entrar em contato e contribuir com doações
 🛠️ Tecnologias Utilizadas:
 ********************************************************************************************************
 
-Categoria	Tecnologias
 Frontend	HTML5, CSS3, JavaScript (ES6)
+
 Layout Responsivo	Flexbox, Grid Layout, Media Queries
+
 Controle de Versão	Git e GitHub (GitFlow)
+
 Publicação	GitHub Pages
+
 Acessibilidade	Padrões WCAG 2.1 Nível AA
+
 Ícones e Imagens	SVG otimizados, imagens WebP
+
 Validação	Máscaras e validações JS (CPF, e-mail)
+
+********************************************************************************************************
 
 📁 Estrutura do Projeto
    📦 site-ong-cores-do-amanha/
@@ -55,8 +62,6 @@ Validação	Máscaras e validações JS (CPF, e-mail)
    │   └── script.js         → funções e interações JS
 
    ├── index.html            → página inicial
-
-   ├── sobre.html            → informações sobre a ONG
 
    ├── projetos.html         → lista de projetos e ações
 
