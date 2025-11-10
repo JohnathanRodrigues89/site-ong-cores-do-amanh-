@@ -1,4 +1,10 @@
+// ===============================
+// SITE ONG CORES DO AMANHÃ
+// Acessibilidade | Validação | Interatividade
+// ===============================
+
 document.addEventListener('DOMContentLoaded', () => {
+
     // -------------------------------
     // MENU HAMBÚRGUER E RESPONSIVO
     // -------------------------------
@@ -9,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.setAttribute('aria-controls', 'main-navigation');
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', 'Abrir menu de navegação');
-        hamburger.setAttribute('role', 'button'); // acessibilidade extra
+        hamburger.setAttribute('role', 'button');
         navMenu.setAttribute('role', 'menu');
 
         const toggleMenu = () => {
@@ -38,12 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------
     // MODO DE ALTO CONTRASTE (ACESSIBILIDADE)
     // -------------------------------
-    const contrastButton = document.createElement('button');
-    contrastButton.textContent = 'Alto Contraste';
-    contrastButton.className = 'btn-contraste';
-    contrastButton.setAttribute('aria-pressed', 'false');
-    contrastButton.setAttribute('aria-label', 'Ativar ou desativar modo de alto contraste');
-    document.body.appendChild(contrastButton);
+    const contrastButton = document.getElementById('btn-contraste') || (() => {
+        const button = document.createElement('button');
+        button.id = 'btn-contraste';
+        button.textContent = 'Alto Contraste';
+        button.className = 'btn-contraste';
+        button.setAttribute('aria-pressed', 'false');
+        button.setAttribute('aria-label', 'Ativar ou desativar modo de alto contraste');
+        document.body.appendChild(button);
+        return button;
+    })();
 
     const toggleContrast = () => {
         const isActive = document.body.classList.toggle('alto-contraste');
@@ -59,37 +69,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------
-    // SISTEMA DE PROJETOS DINÂMICOS (index.html / projetos.html)
+    // SISTEMA DE PROJETOS DINÂMICOS
     // -------------------------------
     const projetosContainer = document.querySelector('.projetos-grid');
-    if (projetosContainer) {
+    if (projetosContainer && !projetosContainer.querySelector('.card')) {
         const projetos = [
             { title: "Oficinas de Arte", description: "Atividades artísticas para crianças e jovens.", img: "../assets/img/img03.jpg" },
             { title: "Educação e Inclusão", description: "Projetos educativos e sociais.", img: "../assets/img/img04.jpg" },
             { title: "Voluntariado", description: "Participação em ações comunitárias.", img: "../assets/img/img05.png" }
         ];
 
-        if (!projetosContainer.querySelector('.card')) {
-            projetos.forEach(p => {
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = `
-                    <div class="card__img-container">
-                        <img src="${p.img}" alt="${p.title}" class="card__img">
-                    </div>
-                    <div class="card__title">${p.title}</div>
-                    <p>${p.description}</p>
-                `;
-                projetosContainer.appendChild(card);
-            });
-        }
+        projetos.forEach(p => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <div class="card__img-container">
+                    <img src="${p.img}" alt="${p.title}" class="card__img">
+                </div>
+                <div class="card__title">${p.title}</div>
+                <p>${p.description}</p>
+            `;
+            projetosContainer.appendChild(card);
+        });
     }
 
     // -------------------------------
-    // FORMULÁRIO CADASTRO COM VALIDAÇÃO E TOAST
+    // FORMULÁRIO CADASTRO COM VALIDAÇÃO
     // -------------------------------
     const form = document.getElementById('form-cadastro');
-    const formErrors = [];
     const toastContainer = document.getElementById('toast-container') || (() => {
         const div = document.createElement('div');
         div.id = 'toast-container';
@@ -98,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     const displayToast = (message, type = "success") => {
-        if (!toastContainer) return;
+        toastContainer.innerHTML = ''; // Evita sobreposição
         const toast = document.createElement('div');
         toast.className = `toast toast--${type}`;
-        toast.setAttribute('role', 'status'); // acessibilidade
+        toast.setAttribute('role', 'status');
         toast.setAttribute('aria-live', 'polite');
         toast.textContent = message;
         toastContainer.appendChild(toast);
@@ -118,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const cep = form.querySelector('#cep');
         const cidade = form.querySelector('#cidade');
         const estado = form.querySelector('#estado');
+
+        const formErrors = [];
 
         const setError = (field, message) => {
             formErrors.push(field);
@@ -150,33 +159,33 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!pattern.test(field.value.trim())) setError(field, "E-mail inválido");
         };
 
-        const minimumAge = (field, name) => {
-            const date = new Date(field.value);
-            const today = new Date();
-            let age = today.getFullYear() - date.getFullYear();
-            if (
-                today.getMonth() < date.getMonth() ||
-                (today.getMonth() === date.getMonth() && today.getDate() < date.getDate())
-            )
-                age--;
-            if (age < 18) setError(field, `${name} deve ser maior de 18 anos`);
-        };
-
         const validateCPF = (field) => {
-            let v = field.value.replace(/\D/g, "");
-            if (v.length !== 11 || /^(\d)\1+$/.test(v)) setError(field, "CPF inválido");
+            let cpfValue = field.value.replace(/\D/g, "");
+            if (cpfValue.length !== 11 || /^(\d)\1+$/.test(cpfValue)) return setError(field, "CPF inválido");
+
+            let soma = 0, resto;
+            for (let i = 1; i <= 9; i++) soma += parseInt(cpfValue.substring(i - 1, i)) * (11 - i);
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpfValue.substring(9, 10))) return setError(field, "CPF inválido");
+
+            soma = 0;
+            for (let i = 1; i <= 10; i++) soma += parseInt(cpfValue.substring(i - 1, i)) * (12 - i);
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpfValue.substring(10, 11))) setError(field, "CPF inválido");
         };
 
         const validateCEP = async (cepField, cidadeField, estadoField) => {
             const cleaned = cepField.value.replace(/\D/g, "");
+            if (!/^\d{8}$/.test(cleaned)) return setError(cepField, "CEP inválido");
             try {
-                if (!/^\d{8}$/.test(cleaned)) throw "inv";
                 const res = await fetch(`https://viacep.com.br/ws/${cleaned}/json/`);
                 const data = await res.json();
-                if (data.erro) throw "inv";
+                if (data.erro) throw "inválido";
                 cidadeField.value = data.localidade;
                 estadoField.value = data.uf;
-            } catch (e) {
+            } catch {
                 setError(cepField, "CEP inválido");
                 cidadeField.value = "";
                 estadoField.value = "";
@@ -186,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Máscaras
         telefone?.addEventListener("input", (e) => {
             let v = e.target.value.replace(/\D/g, "");
-            if (v.length > 11) v = v.slice(0, 11);
+            v = v.slice(0, 11);
             v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
             v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
             e.target.value = v;
@@ -194,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cpf?.addEventListener("input", (e) => {
             let v = e.target.value.replace(/\D/g, "");
-            if (v.length > 11) v = v.slice(0, 11);
+            v = v.slice(0, 11);
             v = v.replace(/(\d{3})(\d)/, "$1.$2");
             v = v.replace(/(\d{3})(\d)/, "$1.$2");
             v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
@@ -203,62 +212,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cep?.addEventListener("input", (e) => {
             let v = e.target.value.replace(/\D/g, "");
-            if (v.length > 8) v = v.slice(0, 8);
+            v = v.slice(0, 8);
             v = v.replace(/(\d{5})(\d)/, "$1-$2");
             e.target.value = v;
-        });
-
-        // Eventos de validação
-        const validations = [
-            { field: nome, callback: () => notEmpty(nome, "Nome") },
-            { field: email, callback: () => notEmpty(email, "Email") },
-            { field: email, callback: () => validateEmail(email) },
-            { field: cpf, callback: () => notEmpty(cpf, "CPF") },
-            { field: cpf, callback: () => validateCPF(cpf) },
-            { field: telefone, callback: () => notEmpty(telefone, "Telefone") },
-            { field: dataNascimento, callback: () => notEmpty(dataNascimento, "Data de Nascimento") },
-            { field: dataNascimento, callback: () => minimumAge(dataNascimento, "Data de Nascimento") },
-            { field: endereco, callback: () => notEmpty(endereco, "Endereço") },
-            { field: cep, callback: () => notEmpty(cep, "CEP") },
-            { field: cep, callback: async () => await validateCEP(cep, cidade, estado) },
-        ];
-
-        validations.forEach((v) => {
-            v.field.addEventListener("blur", v.callback);
-            v.field.addEventListener("input", () => cleanError(v.field));
         });
 
         // Envio do formulário
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-
-            // limpar erros antigos
             form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
             form.querySelectorAll('.error-message').forEach(msg => msg.innerText = '');
-
             formErrors.length = 0;
-            for (const v of validations) await v.callback();
+
+            await notEmpty(nome, "Nome");
+            await notEmpty(email, "Email");
+            await validateEmail(email);
+            await notEmpty(cpf, "CPF");
+            await validateCPF(cpf);
+            await notEmpty(telefone, "Telefone");
+            await notEmpty(dataNascimento, "Data de Nascimento");
+            await notEmpty(endereco, "Endereço");
+            await notEmpty(cep, "CEP");
+            await validateCEP(cep, cidade, estado);
 
             if (formErrors.length > 0) {
                 displayToast("Corrija os erros antes de enviar", "error");
-            } else {
-                displayToast("Cadastro enviado com sucesso!", "success");
-                const formData = {
-                    nome: nome.value,
-                    email: email.value,
-                    cpf: cpf.value,
-                    telefone: telefone.value,
-                    dataNascimento: dataNascimento.value,
-                    endereco: endereco.value,
-                    cep: cep.value,
-                    cidade: cidade.value,
-                    estado: estado.value,
-                };
-                localStorage.setItem("cadastro", JSON.stringify(formData));
-                console.log("Dados salvos:", formData); // debug
-                form.reset();
-                nome.focus(); // acessibilidade
+                return;
             }
+
+            displayToast("Cadastro enviado com sucesso!", "success");
+
+            const formData = {
+                nome: nome.value,
+                email: email.value,
+                cpf: cpf.value,
+                telefone: telefone.value,
+                dataNascimento: dataNascimento.value,
+                endereco: endereco.value,
+                cep: cep.value,
+                cidade: cidade.value,
+                estado: estado.value,
+            };
+            localStorage.setItem("cadastro", JSON.stringify(formData));
+            form.reset();
+            nome.focus();
+            window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
 });
